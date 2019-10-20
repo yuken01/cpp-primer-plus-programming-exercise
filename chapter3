@@ -1,0 +1,145 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+bool PE[7] = {0,0,0,0,0,0,1};
+//PE is the switch to the programming exercise.
+void underscore_back() {
+	int underscore_number = 10;
+	for (int i = 0; i < underscore_number; i++) {
+		cout << "_";
+	}
+	for (int i = 0; i < underscore_number; i++) {
+		cout << "\b";
+	}
+}
+double input(string& s, double&d)
+{
+	cout << "Enter the " << s << ": ";
+	underscore_back();
+	cin >> d;
+	return d;
+}
+int main()
+{
+	
+	{
+		enum valn {
+			height_inch, height_feet, height_meter,
+			weight_pound, weight_kg
+		};
+		string val[]{ "height_inch","height_feet","height_meter",
+		"weight_pound","weight_kg" };
+		double d[7]{};
+		if (PE[0])
+		{
+			input(val[height_inch], d[height_inch]);
+			cout << "Your height is " << int(d[height_inch]) / 12 << " feet and "
+				<< int(d[height_inch]) % 12 << " inches.\n";
+		}
+		if (PE[1])
+		{
+			input(val[height_feet], d[height_feet]);
+			d[height_inch] =
+				input(val[height_inch], d[height_inch])
+				+ d[height_feet] * 12.;
+			d[height_meter] =
+				0.0254 * d[height_inch];
+
+			d[weight_kg]=
+				input(val[weight_pound], d[weight_pound]) / 2.2;
+
+			double BMI =
+				d[weight_kg] / d[height_meter] / d[height_meter];
+
+			cout << "The BMI is " << BMI << ".\n" << endl;
+
+
+		}
+	}
+	if (PE[2])
+	{
+		enum { degrees, minutes, seconds };
+		double d[3]{};
+		cout << "Enter a latitude in degrees, minutes, and seconds:\n"
+			<< "First, enter the degrees : ";
+		cin >> d[degrees];
+			
+		cout << "Next, enter the minutes of arc : ";
+		cin >> d[minutes];
+
+		cout << "Finally, enter the seconds of arc : ";
+		cin >> d[seconds];
+
+		cout << d[degrees] << " degrees, "
+			<< d[minutes] << " minutes, "
+			<< d[seconds] << " seconds = " <<
+			d[degrees] + d[minutes] / 60. + d[seconds] / 3600
+			<< " degrees";
+	}
+	if (PE[3])
+	{
+		string prompt{ " number of seconds" };
+		enum{day,hour,min,sec};
+		double d[4]{0};
+		string s[]{ " days, ", " hours, "," minutes, "," seconds"};
+		
+		input(prompt, d[sec]);
+		
+		cout <<long(d[sec]) << " seconds = ";
+
+		enum{sec_day,sec_hour,sec_min};
+		long l_convert[]{ (60 * 60 * 24),(60*60),60 };
+
+		for (int i = 0; i < 3; i++)
+		{
+
+			d[i] = long(d[sec] / l_convert[i]);
+			d[sec] = long(d[sec]) % l_convert[i];
+			cout <<long( d[i]) << s[i];
+		}
+		cout<< long(d[sec]) << s[sec];
+
+	}
+	if (PE[4])
+	{
+		string p[]{ "world's population","population of the US" };
+		double d[2]{};
+		
+		for (int i = 0; i < 2; i++)
+		{
+			input(p[i], d[i]);
+		}
+		cout << "The population of the US is "
+			<< d[1] / d[0] * 100. <<
+			"% of the world population.";
+			
+	}
+	{
+		string s[]
+		{
+		"miles you have driven",
+		"gallons of gasoline you have used",
+		"the miles per gallon",
+		"liters per 100 kilometers"
+		};
+		double d[4]{};
+
+		if (PE[5])
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				input(s[i], d[i]);
+			
+			}
+			cout << s[2] << ": " << d[0] / d[1];
+		}
+		if (PE[6])
+		{
+			input(s[3], d[3]);
+			cout << s[2] << ": "
+				<<long(62.14 / (d[3] / 3.875));
+		}
+	}
+}
